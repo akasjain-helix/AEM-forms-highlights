@@ -9,42 +9,78 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+body {
+    padding: 0;
+    font-family: "Adobe Clean", Arial, sans-serif;
+}
+
 mj-all {
     padding: 0;
-    font-family: 'Adobe Clean', Arial, sans-serif;
-    font-size: 13px;
+    font-family: "Adobe Clean", Arial, sans-serif;
+    font-size: 14px;
     font-weight: 300;
     line-height: 20px;
 }
 
 mj-section {
-    css-class: 'section';
+    css-class: "section";
+    padding-bottom: 20px;
 }
 
 mj-body {
-    background-color: #eee;
+    background-color: var(--outer-bg-color);
+    width: 750px;
 }
 
 mj-button {
-    background-color: black;
-    border-radius: 0;
-    font-size: 11px;
+    background-color: var(--primary-action-color);
+    border-color: var(--primary-action-color);
+    color: var(--inner-bg-color);
+    border-radius: 16px;
+    border-style: solid;
+    border-width: 2px;
     font-weight: 700;
-    line-height: 13.2px;
-    text-transform: uppercase;
-    width: 180px;
-    padding-top: 25px;
+    height: auto;
+    min-height: 32px;
+    min-width: 72px;
+    inner-padding: 3px 14px 5px;
 }
 
-mj-wrapper {
+span.icon img {
+    padding: 0 10px;
+}
+
+.mj-content-wrapper {
+    background-color: var(--inner-bg-color);
+    padding-top: 70px;
+    padding-bottom: 100px;
+    border-bottom: 10px solid var(--outer-bg-color);
+}
+
+.mj-first {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.mj-last {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.mj-content-image {
+    padding-top: 20px;
     padding-bottom: 40px;
 }
 
-.mj-content-column {
-    padding: 0 20px;
+.mj-content-section {
+    padding-left: 70px;
+    padding-right: 70px;
+    background-color: var(--inner-bg-color);
 }
 
-.aem-sites-sprint-summary .mj-highlight {
-    background-color: #bfbfbf;
-    padding: 0 10px;
+:root {
+    --outer-bg-color: #eee;
+    --inner-bg-color: #fff;
+    --secondary-bg-color: #F5F5F5;
+    --primary-action-color: #1473e6;
 }

@@ -9,3 +9,4 @@ tools/litmus/node_modules
 
 **/.aio
 **/.env
+.idea/*

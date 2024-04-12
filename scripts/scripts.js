@@ -1,4 +1,8 @@
-import { sampleRUM, waitForLCP } from './lib-franklin.js';
+import {
+  sampleRUM,
+  waitForLCP,
+  buildBlock,
+} from './lib-franklin.js';
 import { decorateMain, toMjml, init } from './functions.js';
 
 window.hlx = window.hlx || {};
@@ -9,10 +13,19 @@ window.hlx.RUM_GENERATION = 'hlx-email'; // add your RUM generation information 
  */
 async function loadEager(doc) {
   const main = doc.querySelector('main');
-  decorateMain(main);
+
+  const footer = doc.querySelector('footer');
+
+  const footerDiv = document.createElement('div');
+  main.append(footerDiv);
+
+  const footerBlock = buildBlock('footer', '');
+  footerDiv.append(footerBlock);
+
+  await decorateMain(main);
   await waitForLCP([]);
 
-  const html = await toMjml(main);
+  const html = await toMjml(main, footer);
   let frame = document.getElementById('__emailFrame');
   if (!frame) {
     frame = document.createElement('iframe');

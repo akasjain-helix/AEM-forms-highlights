@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   buildBlock,
   decorateBlocks,
@@ -68,7 +69,6 @@ async function loadBlock(block) {
         try {
           return await blockModule.default(b, window);
         } catch (error) {
-          // eslint-disable-next-line no-console
           console.log(`failed to load module for ${blockName}`, error);
           return null;
         }
@@ -113,58 +113,58 @@ async function parseStyle(css) {
     } else if (rule.isRuleset) {
       // get the mj-* selectors
       const defs = rule.selectors
-        .map((selector) => {
-          const isMjTag = (element) => element && element.value.indexOf('mj-') === 0;
-          const isMjClass = (element) => element && element.value.indexOf('.mj-') === 0;
-          const toDef = (first, second) => {
-            if (isMjClass(first)) {
-              if (second || first.value.substring(1).indexOf('.') > 0) {
-                console.log('chaining mj-class selectors is not supported');
-                return null;
-              }
-              return { mjEl: 'mj-all', mjClass: first.value.substring(1) };
-            }
-            if (isMjTag(first)) {
-              if (second && second.value && second.value.charAt(0) === '.') {
-                if (first.value !== 'mj-all') {
-                  // mj-class is not element specific
-                  console.log('className not supported for mj elements other than mj-all');
+          .map((selector) => {
+            const isMjTag = (element) => element && element.value.indexOf('mj-') === 0;
+            const isMjClass = (element) => element && element.value.indexOf('.mj-') === 0;
+            const toDef = (first, second) => {
+              if (isMjClass(first)) {
+                if (second || first.value.substring(1).indexOf('.') > 0) {
+                  console.log('chaining mj-class selectors is not supported');
                   return null;
                 }
-                return { mjEl: first.value, mjClass: second.value.substring(1) };
+                return { mjEl: 'mj-all', mjClass: first.value.substring(1) };
               }
-              return { mjEl: first.value };
+              if (isMjTag(first)) {
+                if (second && second.value && second.value.charAt(0) === '.') {
+                  if (first.value !== 'mj-all') {
+                    // mj-class is not element specific
+                    console.log('className not supported for mj elements other than mj-all');
+                    return null;
+                  }
+                  return { mjEl: first.value, mjClass: second.value.substring(1) };
+                }
+                return { mjEl: first.value };
+              }
+              return null;
+            };
+            const first = selector.elements[0];
+            const second = selector.elements[1];
+            const def = toDef(first, second);
+            if (def) {
+              return def;
+            }
+            if ((isMjTag(second) || isMjClass(second)) && isTemplate(first.value)) {
+              return toDef(second, selector.elements[2]);
             }
             return null;
-          };
-          const first = selector.elements[0];
-          const second = selector.elements[1];
-          const def = toDef(first, second);
-          if (def) {
-            return def;
-          }
-          if ((isMjTag(second) || isMjClass(second)) && isTemplate(first.value)) {
-            return toDef(second, selector.elements[2]);
-          }
-          return null;
-        })
-        .filter((def) => !!def);
+          })
+          .filter((def) => !!def);
 
       if (defs.length) {
         // remove the rule from the ruleset
         ast.rules.splice(i, 1);
         i -= 1;
         const declarations = rule.rules
-          .map((declaration) => {
-            const [{ value: name }] = declaration.name;
-            let value = declaration.value.toCSS();
-            if (value.charAt(0) === '\'' && value.charAt(value.length - 1) === '\'') {
-              value = value.substring(1, value.length - 1);
-            }
-            return [name, value];
-          })
-          .filter((decl) => !!decl)
-          .reduce((map, [name, value]) => ({ ...map, [name]: value }), {});
+            .map((declaration) => {
+              const [{ value: name }] = declaration.name;
+              let value = declaration.value.toCSS();
+              if (value.charAt(0) === '\'' && value.charAt(value.length - 1) === '\'') {
+                value = value.substring(1, value.length - 1);
+              }
+              return [name, value];
+            })
+            .filter((decl) => !!decl)
+            .reduce((map, [name, value]) => ({ ...map, [name]: value }), {});
         if (Object.keys(declarations).length) {
           defs.forEach(({ mjEl, mjClass = '*' }) => {
             if (!attributes[mjEl]) attributes[mjEl] = {};
@@ -200,8 +200,8 @@ async function loadStyles({ styles, inlineStyles }) {
                 mjml += `<mj-class name="${mjClass}" `;
               }
               mjml += Object.entries(attributes[mjEl][mjClass])
-                .map(([name, value]) => `${name}="${value}"`)
-                .join(' ');
+                  .map(([name, value]) => `${name}="${value}"`)
+                  .join(' ');
               mjml += '/>\n';
             });
           });
@@ -217,92 +217,100 @@ async function loadStyles({ styles, inlineStyles }) {
       }
       return mjml;
     }
-    console.log(`failed to load stylesheet: ${stylesheet}`);
     return '';
   };
   const styles$ = styles
-    ? styles.map(async (stylesheet) => loadStyle(stylesheet, false))
-    : [];
+                  ? styles.map(async (stylesheet) => loadStyle(stylesheet, false))
+                  : [];
   const inlineStyles$ = inlineStyles
-    ? inlineStyles.map(async (stylesheet) => loadStyle(stylesheet, true))
-    : [];
+                        ? inlineStyles.map(async (stylesheet) => loadStyle(stylesheet, true))
+                        : [];
 
   return Promise.all(styles$.concat(inlineStyles$))
-    .then((resolvedStylesheets) => resolvedStylesheets.join(''));
+      .then((resolvedStylesheets) => resolvedStylesheets.join(''));
 }
 
 function reduceMjml(mjml) {
   return mjml.reduce(
-    ([body, head], [sectionBody, sectioHead]) => [
-      body + (sectionBody || ''),
-      head + (sectioHead || ''),
-    ],
-    ['', ''],
+      ([body, head], [sectionBody, sectioHead]) => [
+        body + (sectionBody || ''),
+        head + (sectioHead || ''),
+      ],
+      ['', ''],
   );
 }
 
 export function decorateDefaultContent(wrapper, { textClass = '', buttonClass = '', imageClass = '' } = {}) {
   return [...wrapper.children]
-    .reduce((mjml, par) => {
-      const img = par.querySelector('img');
-      if (img) {
-        return `${mjml}<mj-image mj-class="${imageClass}" src="${img.src}" />`;
-      }
-      if (par.matches('.button-container')) {
-        const link = par.querySelector(':scope > a');
-        return `${mjml}
+      .reduce((mjml, par) => {
+        const img = par.querySelector('img');
+        if (img) {
+          const { width } = img;
+          const isIcon = Array.from(img?.parentElement?.classList || []).includes('icon');
+          if (!isIcon) {
+            return `${mjml}<mj-image width="${width}" mj-class="${imageClass}" src="${img.src}" />`;
+          }
+        }
+        if (par.matches('.button-container')) {
+          const link = par.querySelector(':scope > a');
+          return `${mjml}
                 <mj-button mj-class="${buttonClass}" href="${link.href}">
                   ${link.innerText}
                 </mj-button>
             `;
-      }
-      if (mjml.endsWith('</mj-text>')) {
-        return `${mjml.substring(0, mjml.length - 10)}${par.outerHTML}</mj-text>`;
-      }
-      return `${mjml}<mj-text mj-class="${textClass}">${par.outerHTML}</mj-text>`;
-    }, '');
+        }
+        if (mjml.endsWith('</mj-text>')) {
+          return `${mjml.substring(0, mjml.length - 10)}${par.outerHTML}</mj-text>`;
+        }
+        return `${mjml}<mj-text mj-class="${textClass}">${par.outerHTML}</mj-text>`;
+      }, '');
 }
 
 export async function toMjml(main) {
   const mjml2html$ = loadMjml();
+  let counter = 0;
+
   const main$ = Promise.all([...main.querySelectorAll(':scope > .section')]
-    .map(async (section) => {
-      const [sectionBody, sectionHead] = reduceMjml(await Promise.all([...section.children]
-        .map(async (wrapper) => {
-          if (wrapper.matches('.default-content-wrapper')) {
-            return Promise.resolve([`
-            <mj-section mj-class="mj-content-section">
+                                .map(async (section) => {
+                                  counter += 1;
+                                  const [sectionBody, sectionHead] = reduceMjml(await Promise.all([...section.children]
+                                                                                                      .map(async (wrapper) => {
+                                                                                                        if (wrapper.matches('.default-content-wrapper')) {
+                                                                                                          return Promise.resolve([`
+            <mj-section mj-class="${counter === 1 ? 'mj-first' : ''} mj-content-section">
               <mj-column mj-class="mj-content-column">
-                ${decorateDefaultContent(wrapper,
-              { textClass: 'mj-content-text', imageClass: 'mj-content-image', buttonClass: 'mj-content-button' }
-            )}
+                ${decorateDefaultContent(
+                                                                                                              wrapper,
+                                                                                                              { textClass: 'mj-content-text', imageClass: 'mj-content-image', buttonClass: 'mj-content-button' },
+                                                                                                          )}
               </mj-column>
             </mj-section>
           `]);
-          }
-          const block = wrapper.querySelector('.block');
-          if (block) {
-            const decorator = await loadBlock(block);
-            const decorated$ = decorator(block);
-            const styles$ = loadStyles(decorator);
-            return Promise.all([decorated$, styles$])
-              .catch((err) => {
-                console.error(err);
-                return [];
-              });
-          }
-          return Promise.resolve([]);
-        })));
+                                                                                                        }
 
-      return [
-        `<mj-wrapper>${sectionBody}</mj-wrapper>`,
-        sectionHead
-      ];
-    }));
+                                                                                                        const block = wrapper.querySelector('.block');
+                                                                                                        if (block) {
+                                                                                                          const decorator = await loadBlock(block);
+                                                                                                          const decorated$ = decorator(block);
+                                                                                                          const styles$ = loadStyles(decorator);
+                                                                                                          return Promise.all([decorated$, styles$])
+                                                                                                              .catch((err) => {
+                                                                                                                console.error(err);
+                                                                                                                return [];
+                                                                                                              });
+                                                                                                        }
+                                                                                                        return Promise.resolve([]);
+                                                                                                      })));
+
+                                  return [
+                                    `<mj-wrapper mj-class="mj-content-wrapper ${section.previousElementSibling == null ? 'mj-first' : ''} ${section.nextElementSibling == null || (section.nextElementSibling && section.nextElementSibling.nextElementSibling == null) ? 'mj-last' : ''}">${sectionBody}</mj-wrapper>`,
+                                    sectionHead,
+                                  ];
+                                }));
   const styles$ = loadStyles({
-    styles: ['/styles/email-styles.css'],
-    inlineStyles: ['/styles/email-inline-styles.css'],
-  });
+                               styles: ['/styles/email-styles.css'],
+                               inlineStyles: ['/styles/email-inline-styles.css'],
+                             });
 
   const mjmlStyles = await styles$;
   const [body, head] = reduceMjml(await main$);
@@ -319,22 +327,11 @@ export async function toMjml(main) {
 function buildHeroBlock(main) {
   const picture = main.querySelector('picture');
   if (picture
-    && picture.parentElement === main.firstElementChild
-    && picture.parentElement.firstElementChild === picture) {
+      && picture.parentElement === main.firstElementChild
+      && picture.parentElement.firstElementChild === picture) {
     // picture is the first element on the page
     const elems = [...picture.parentElement.children];
     picture.parentElement.append(buildBlock('hero', { elems }));
-  }
-}
-
-function buildIntroBlock(main) {
-  const h1 = main.firstElementChild.querySelector(':scope > h1');
-  if (h1) {
-    const textSiblings = [...main.firstElementChild.querySelectorAll(':scope > :where(p,h1,h2,h3,h4,h5,h6,ul,ol)')];
-    const placeholder = document.createElement('div');
-    h1.replaceWith(placeholder);
-    const block = buildBlock('intro', { elems: textSiblings });
-    placeholder.replaceWith(block);
   }
 }
 
@@ -345,9 +342,7 @@ function buildIntroBlock(main) {
 function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
-    buildIntroBlock(main);
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
   }
 }
@@ -400,10 +395,10 @@ function decoratePersonalization(main) {
  * @param {Element} main The main element
  */
 // eslint-disable-next-line import/prefer-default-export
-export function decorateMain(main) {
+export async function decorateMain(main) {
   decorateTemplateAndTheme();
   decorateButtons(main);
-  decorateIcons(main);
+  await decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
