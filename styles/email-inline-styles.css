@@ -31,7 +31,7 @@ a:hover {
 
 p {
     text-align: left;
-    font: normal normal normal 18px/26px  "Adobe Clean";
+    font: normal normal normal 13px/19px  "Adobe Clean";
     color: #2C2C2C;
     margin-top: 0;
     margin-bottom: 40px;
@@ -45,16 +45,21 @@ h1 {
 }
 
 h2 {
-    font: normal normal normal 36px/40px  "Adobe Clean";
-    line-height: 1.25;
+    font: normal normal normal 24px/28px "Adobe Clean";
+    line-height: 1;
+    background-color: lightgrey;
+    padding: 10px;
+    margin: 0;
 }
 
 h3 {
-    font: normal normal normal 28px/32px  "Adobe Clean";
+    font: normal normal normal 23px/27px  "Adobe Clean" !important;
+    color: #1d80f5;
+    margin-bottom: 15px !important;
 }
 
 h4 {
-    font: normal normal bold 22px/29px  "Adobe Clean";
+    font: normal normal normal 22px/29px  "Adobe Clean";
     margin-bottom: 0;
 }
 
@@ -67,13 +72,18 @@ hr {
     margin-bottom: 60px;
 }
 
+.separator {
+    margin-top: 100px;
+    margin-bottom: 60px;
+}
+
 ul {
     padding-left: 1.2em;
     list-style-position: outside;
 }
 
 ul li {
-    font: normal normal normal 18px/26px  "Adobe Clean";
+    font: normal normal normal 13px/16px  "Adobe Clean";
     padding-left: 0.6em;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
 }
