@@ -1,11 +1,11 @@
 .mj-footer {
     padding: 46px 50px 20px;
     position: relative;
-    background-color: #F5F5F5;
+    background-color: #FDCA93;
     text-align: left;
     font: normal normal normal 11px/18px  "Adobe Clean";
     letter-spacing: 0;
-    color: #959595;
+    color: #000000;
 }
 
 .mj-footer-min-height {
@@ -13,7 +13,7 @@
 }
 
 .mj-footer-logo {
-    background:transparent;
+    background: #FDCA93;
     width: 107px;
     padding-bottom: 40px;
 }
@@ -22,6 +22,6 @@
     text-align: left;
     font: normal normal normal 11px/18px  "Adobe Clean" !important;
     letter-spacing: 0;
-    color: #959595 !important;
+    color: black !important;
 }
 

@@ -1,8 +1,12 @@
 .mj-hero {
-    padding: 70px 70px 13px !important;
+    padding: 20px 70px 20px !important;
     position: relative;
-    background-color: #FFF;
+}
 
+.mj-hero-section {
+    position: relative;
+    padding: 5px 70px 5px !important;
+    height: 150px;
 }
 
 .mj-hero-min-height {
@@ -16,7 +20,11 @@
 }
 
 .mj-hero-text {
-    text-align: left;
+    text-align: end;
+    padding: 50px 10px 5px 310px;
+    font-size: 24px;
+    color: #ffffff !important;
+    position: absolute;
 }
 
 .mj-hero-violator {

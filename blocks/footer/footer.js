@@ -26,13 +26,13 @@ export default async function decorate(block) {
         p.replaceWith(div);
     }
 
-    const logoUrl = new window.URL(`${window.hlx.codeBasePath}/icons/logo2.png`, window.location.href);
+    const logoUrl = new window.URL(`${window.hlx.codeBasePath}/icons/adobe-red.png`, window.location.href);
 
     return `
     <mj-section mj-class="mj-footer"  >
         <mj-column width="100%" align="left">
             <mj-image mj-class="mj-footer-logo" align="left" src="${logoUrl}" />
-            <mj-text  color="#959595" font-family="Adobe Clean" font-size="11px">${footerBlock.body.outerHTML}</mj-text>
+            <mj-text color="#000000" font-family="Adobe Clean" font-size="11px">${footerBlock.body.outerHTML}</mj-text>
         </mj-column>
         <mj-column width="0%">
             <mj-spacer mj-class="mj-footer-min-height" />
