@@ -15,7 +15,7 @@ export default function decorate(block) {
         let text = Array.from(childContainer).map(child => child.outerHTML).join(' ');
 
         result = result + `
-                ${i != 0 ? '<mj-divider border-color="lightgrey" border-width="2px"/>': ''}
+                ${i != 0 ? '<mj-divider border-color="lightgrey" border-width="2px"/>&nbsp;': ''}
                 ${heading.tagName === 'H3' ? '<mj-text><h3>' + heading.innerHTML + '</h3></mj-text>' : '' }
                 <mj-text>${text}</mj-text>
                 `;
