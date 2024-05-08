@@ -10,13 +10,13 @@
     color: black;
 }
 
-.mj-card-text p{
-    margin-bottom: 5px;
+/*.mj-card-text p{
+    margin-bottom: 0px;
     margin-top: 0px;
-}
+}*/
 
 .mj-card-text li{
-    margin-bottom: 5px;
+    margin-bottom: 0px;
     margin-top: 0px;
 }
 
@@ -30,7 +30,7 @@
     height: 100px;
 }
 
-mj-text h3 {
-    padding-top: 5px;
+.mj-text-content h3 {
+    padding-top: 10px;
 }
 

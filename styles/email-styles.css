@@ -24,7 +24,8 @@ mj-all {
 
 mj-section {
     css-class: "section";
-    padding-bottom: 20px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 mj-body {
@@ -83,4 +84,10 @@ span.icon img {
     --inner-bg-color: #fff;
     --secondary-bg-color: #F5F5F5;
     --primary-action-color: #1473e6;
+}
+
+mj-divider {
+    padding-top: 5px;
+    border-width: 2px;
+    border-color: lightgray;
 }

@@ -1,7 +1,7 @@
 export default function decorate(block) {
     const numOfFeatures = block.childElementCount;
 
-    let result = `<mj-section padding-left="70px" padding-right="70px" background-color="#FFFFFF">
+    let result = `<mj-section mj-class="mj-content-section">
                         <mj-column align="left" mj-class="mj-card=0">
                         <mj-text><table>
                         <tbody>`;
@@ -18,12 +18,12 @@ export default function decorate(block) {
             childContainer[0].remove();
             row1 = row1 + `<td width='${width}%'>${heading.outerHTML}</td>`;
         }
-        //let text = Array.from(childContainer).map(child => child.outerHTML).join(' ');
-        //const img = text.querySelector('img');
         const img = childContainer[0].querySelector('img');
+        const img_width = (750/numOfFeatures) * 0.8;
+        const img_height = img_width * (img.height/img.width);
         const src = img.src;
 
-        row2 = row2 + `<td width='${width}%'><img src='${src}' width='64' height='64'/></td>`;
+        row2 = row2 + `<td width='${width}%'><img src='${src}' width='${img_width}' height='${img_height}'/></td>`;
 
     }
     result = result + `<tr>${row1}</tr><tr>${row2}</tr>`
