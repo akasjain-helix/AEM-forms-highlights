@@ -30,7 +30,7 @@ a:hover {
 
 
 p {
-    font: normal normal normal 14px/19px  "Adobe Clean";
+    font: normal normal normal 14px/19px  "Adobe Clean", Arial, sans-serif;
     color: #2C2C2C;
     margin-top: 5px;
     margin-bottom: 10px;
@@ -87,7 +87,13 @@ ul {
 }
 
 ul li {
-    font: normal normal normal 13px/16px  "Adobe Clean";
+    font: normal normal normal 14px/19px  "Adobe Clean", Arial, sans-serif;
     padding-left: 0.6em;
     padding-bottom: 5px;
+    color: #2C2C2C;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    text-align: justify;
+    text-justify: inter-word;
 }

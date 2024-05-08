@@ -4,16 +4,17 @@
     css-class: 'mj-card-text';
 }
 
-.mj-card-text p,ul,li {
-    font-size: 13px !important;
-    font-family: "Adobe Clean", Arial, sans-serif !important;
-    color: black;
+.mj-card-medium {
+    padding: 10px 10px 10px 0px;
+    position: relative;
+    css-class: 'mj-card-m-img';
 }
 
-/*.mj-card-text p{
-    margin-bottom: 0px;
-    margin-top: 0px;
-}*/
+.mj-card-small {
+    padding: 10px 10px 10px 0px;
+    position: relative;
+    css-class: 'mj-card-s-img';
+}
 
 .mj-card-text li{
     margin-bottom: 0px;
@@ -26,8 +27,15 @@
 }
 
 .mj-card-text img {
-    width: 100px;
-    height: 100px;
+    width: 90%;
+}
+
+.mj-card-s-img img {
+    width: 30%;
+}
+
+.mj-card-m-img img {
+    width: 50%;
 }
 
 .mj-text-content h3 {

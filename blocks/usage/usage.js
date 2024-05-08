@@ -2,7 +2,7 @@ export default function decorate(block) {
     const numOfFeatures = block.childElementCount;
 
     let result = `<mj-section mj-class="mj-content-section">
-                        <mj-column align="left" mj-class="mj-card=0">
+                        <mj-column align="left" >
                         <mj-text><table>
                         <tbody>`;
     let row1 = "";
