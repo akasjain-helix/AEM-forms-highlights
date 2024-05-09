@@ -111,9 +111,10 @@ const downloadHtml = () => {
   const iframe = document.getElementById('__emailFrame');
   if (iframe) {
     const h1 = iframe.contentWindow.document.body.querySelector('h1');
-    const title = h1 ? h1.innerText : 'New E-Mail';
+    const title = h1 ? h1.innerText : 'Experience Manager Forms Engineering Updates | April 2024';
     const subject = `Subject: ${title}`;
-    const to = 'To: noreply@adobe.com';
+    const to = 'To: prjain@adobe.com';
+    const bcc = 'Bcc: jmp-ext-staff@adobe.com, dxindialeaders@adobe.com, AEM-PM@adobe.com, DevAEMLC@adobe.com, support-tech@adobe.com, aem-forms-mgrs@adobe.com, gdc-aem-competency@adobe.com, ORG-SUVRAT-ALL@adobe.com';
     const html = inline_img(iframe);
 
     const fileName = title
@@ -123,6 +124,7 @@ const downloadHtml = () => {
                      + '.emltpl'
 
     const eml = to + '\n'
+                + bcc + '\n'
                 + subject + '\n'
                 + 'Content-Type: text/html;charset=utf-8\n'
                 + 'X-Unsent: 1'+'\n'

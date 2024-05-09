@@ -9,7 +9,7 @@ export default function decorate(block) {
 
     return `
     <mj-wrapper padding-bottom="0">
-        <mj-section width="750px" mj-class="mj-hero-section" background-url="${logoUrl}?height=125&width=750" background-repeat="no-repeat">
+        <mj-section width="750px" mj-class="mj-hero-section" background-url="${logoUrl}?height=120&width=750" background-repeat="no-repeat">
              <mj-column width="100%" text-align="right">
                 <mj-text mj-class="mj-hero-text">${version}</mj-text>
             </mj-column>

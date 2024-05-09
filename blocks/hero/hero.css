@@ -1,3 +1,4 @@
+/*
 .mj-hero {
     padding: 20px 70px 20px !important;
     position: relative;
@@ -20,12 +21,12 @@
 }
 
 .mj-hero-text {
-    text-align: end;
     padding: 50px 10px 5px 310px;
     font-size: 24px;
-    color: #ffffff !important;
+    color: black !important;
     position: absolute;
     padding-top: 50px;
+    background-color: white !important;
 }
 
 .mj-hero-violator {
@@ -41,3 +42,4 @@
     font-size: 11px;
 
 }
+*/
