@@ -114,7 +114,7 @@ const downloadHtml = () => {
     const title = h1 ? h1.innerText : 'Experience Manager Forms Engineering Updates | April 2024';
     const subject = `Subject: ${title}`;
     const to = 'To: prjain@adobe.com';
-    const bcc = 'Bcc: jmp-ext-staff@adobe.com, dxindialeaders@adobe.com, AEM-PM@adobe.com, DevAEMLC@adobe.com, support-tech@adobe.com, aem-forms-mgrs@adobe.com, gdc-aem-competency@adobe.com, ORG-SUVRAT-ALL@adobe.com';
+    const bcc = 'Bcc: jmp-ext-staff@adobe.com, dxindialeaders@adobe.com, AEM-PM@adobe.com, DevAEMLC@adobe.com, support-tech@adobe.com, aem-forms-mgrs@adobe.com, gdc-aem-competency@adobe.com, ORG-SUVRAT-ALL@adobe.com, ORG-SALILT-ALL@adobe.com, ORG-GITESH-ALL@adobe.com';
     const html = inline_img(iframe);
 
     const fileName = title
