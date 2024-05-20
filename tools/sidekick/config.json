@@ -21,13 +21,21 @@
             "event": "copyHtml"
         },
         {
-            "id": "downloadHtml",
-            "title": "Download E-Mail",
+            "id": "downloadHtmlMac",
+            "title": "Download E-Mail for MAC",
             "environments": [
                 "dev",
                 "preview"
             ],
             "event": "downloadHtml"
+        },{
+            "id": "downloadHtmlWin",
+            "title": "Download E-Mail for Windows",
+            "environments": [
+                "dev",
+                "preview"
+            ],
+            "event": "downloadHtmlWindows"
         },{
             "id": "litmus",
             "title": "Litmus Preview",
