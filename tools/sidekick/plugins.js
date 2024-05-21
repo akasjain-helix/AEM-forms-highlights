@@ -111,7 +111,12 @@ const downloadHtmlWindows = () => {
   downloadHtml("eml");
 }
 
-const downloadHtml = (format = "emltpl") => {
+const downloadHtml = (event) => {
+  let fileExtension = "emltpl";
+  if(event.type === "custom:downloadHtmlWindows") {
+    fileExtension = "eml";
+  }
+
   const iframe = document.getElementById('__emailFrame');
   if (iframe) {
     const h1 = iframe.contentWindow.document.body.querySelector('h1');
@@ -125,7 +130,7 @@ const downloadHtml = (format = "emltpl") => {
                          .replaceAll(/\W+/g, '-')
                          .replaceAll(/[-]{2,}/g, '-')
                          .toLowerCase()
-                     + '.' + format
+                     + '.' + fileExtension
 
     const eml = to + '\n'
                 + bcc + '\n'
@@ -162,7 +167,7 @@ const downloadHtml = (format = "emltpl") => {
 
 const sk = document.querySelector('helix-sidekick')
 sk.addEventListener('custom:downloadHtml', downloadHtml);
-sk.addEventListener('custom:downloadHtmlWindows', downloadHtmlWindows);
+sk.addEventListener('custom:downloadHtmlWindows', downloadHtml);
 sk.addEventListener('custom:copyHtml', copyHtml);
 
 
