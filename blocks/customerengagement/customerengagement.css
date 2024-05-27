@@ -1,0 +1,44 @@
+.mj-card {
+    padding: 10px 10px 10px 0px;
+    position: relative;
+    css-class: 'mj-card-text';
+}
+
+.mj-card-medium {
+    padding: 10px 10px 10px 0px;
+    position: relative;
+    css-class: 'mj-card-m-img';
+}
+
+.mj-card-small {
+    padding: 10px 10px 10px 0px;
+    position: relative;
+    css-class: 'mj-card-s-img';
+}
+
+.mj-card-text li{
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.mj-card-text ul{
+    margin-bottom: 5px;
+    margin-top: 0px;
+}
+
+.mj-card-text img {
+    width: 100%;
+}
+
+.mj-card-s-img img {
+    width: 30%;
+}
+
+.mj-card-m-img img {
+    width: 50%;
+}
+
+.mj-text-content h3 {
+    padding-top: 10px;
+}
+
