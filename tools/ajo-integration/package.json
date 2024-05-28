@@ -1,0 +1,14 @@
+{
+  "name": "franklin-ajo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ajo-integration.html",
+  "scripts": {
+    "start": "http-server -S -C ../sidekick/localhost.corp.adobe.com.pem -K ../sidekick/localhost.corp.adobe.com-key.pem -p 443"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}
