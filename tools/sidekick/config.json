@@ -31,10 +31,14 @@
         {
             "id": "library",
             "title": "Library",
-            "environments": ["edit","dev",
-                "preview"],
+            "environments": ["edit","dev"],
             "url": "/tools/sidekick/library.html",
             "includePaths": ["**.docx**"]
+        },
+        {
+            "id": "campaign",
+            "title": "Campaign",
+            "environments": ["dev"]
         }
     ]
 }
