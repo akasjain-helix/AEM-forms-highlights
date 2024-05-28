@@ -36,9 +36,17 @@
             "includePaths": ["**.docx**"]
         },
         {
-            "id": "campaign",
-            "title": "Campaign",
-            "environments": ["dev"]
+            "id": "ajo-integration",
+            "title": "AJO",
+            "environments": [
+                "dev"
+            ],
+            "event": "login",
+            "url": "/tools/ajo-integration/ajo-integration.html",
+            "passConfig": true,
+            "passReferrer": true,
+            "isPalette": true,
+            "paletteRect": "top: 54px; left: 5px; bottom: 5px; width: 450px; height: 430px; border-radius: var(--hlx-sk-button-border-radius); overflow: hidden; resize: both;"
         }
     ]
 }
