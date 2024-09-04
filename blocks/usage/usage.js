@@ -20,10 +20,17 @@ export default function decorate(block) {
             numOfChilds--
             row1 = row1 + `<td width='${width}%'>${heading.outerHTML}</td>`;
         }
-        if(numOfChilds > 1) {
-            let text = childContainer[0];
-            childContainer[0].remove();
-            row2 = row2 + `<td width='${width}%'>${text.outerHTML}</td>`;
+
+        if(childContainer.length > 1) {
+            row2 = row2 + `<td width='${width}%'>`;
+
+            while(childContainer.length > 1) {
+                let text = childContainer[0];
+                childContainer[0].remove();
+                row2 = row2 + `${text.outerHTML}</td>`;
+            }
+            row2 = row2 + `</td>`;
+
         }
         const img = childContainer[0].querySelector('img');
         const img_width = (750/numOfFeatures) * 0.8;
