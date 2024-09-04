@@ -19,7 +19,7 @@ export default function decorate(block) {
         let childContainer = block.children[i].querySelector('div > div').children;
         let heading = childContainer[0];
 
-        if (heading.tagName === 'H3') {
+        if (heading && heading.tagName === 'H3') {
             // remove first child from childContainer
             childContainer[0].remove();
         }
@@ -27,7 +27,7 @@ export default function decorate(block) {
 
         result = result + `
                 ${i != 0 ? '<mj-divider border-color="lightgrey" border-width="2px"/>': ''}
-                ${heading.tagName === 'H3' ? '<mj-text><h3>' + heading.innerHTML + '</h3></mj-text>' : '' }
+                ${heading && heading.tagName === 'H3' ? '<mj-text><h3>' + heading.innerHTML + '</h3></mj-text>' : '' }
                 <mj-text mj-class="mj-text-content">${text}</mj-text>
                 `;
     }
