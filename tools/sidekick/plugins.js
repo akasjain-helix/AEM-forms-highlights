@@ -117,10 +117,24 @@ const downloadHtml = (event) => {
     fileExtension = "eml";
   }
 
+  const today = new Date();
+  let month = today.getMonth(); // 0-based index for months
+  let year = today.getFullYear();
+
+  if (today.getDate() >= 1 && today.getDate() <= 10) {
+    month = month === 0 ? 11 : month - 1; // Handle January case
+    year = month === 11 ? year - 1 : year;
+  }
+
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
   const iframe = document.getElementById('__emailFrame');
   if (iframe) {
     const h1 = iframe.contentWindow.document.body.querySelector('h1');
-    const title = h1 ? h1.innerText : 'Experience Manager Forms Engineering Updates | April 2024';
+    const title = h1 ? h1.innerText : `Experience Manager Forms Engineering Updates | ${monthNames[month]} ${year}`;
     const subject = `Subject: ${title}`;
     const to = 'To: prjain@adobe.com';
     const html = inline_img(iframe);
