@@ -1,0 +1,17 @@
+.table {
+  table {
+    border-collapse: collapse; /* Ensures borders don't double up */
+    width: 100%; /* Optional: Makes the table take full width */
+    border: 1px solid #ccc; /* Border for the table */
+  }
+
+  tr {
+    border: 1px solid #ccc; /* Border for table rows */
+  }
+
+  td, th {
+    border: 1px solid #ccc; /* Border for table cells */
+    padding: 8px; /* Adds spacing inside cells */
+    text-align: left; /* Aligns text to the left */
+  }
+}
