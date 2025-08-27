@@ -72,7 +72,7 @@ export default async function decorate(block) {
         const isLastColumn = columnIndex === columns.length - 1;
         const borderRight = isLastColumn ? '2px solid #f4a261' : 'none';
 
-        return `<mj-column mj-class="mj-metric-card-column" border="2px solid #f4a261" border-right="${borderRight}" padding="10px 10px">
+        return `<mj-column mj-class="mj-metric-card-column" border="2px solid #f4a261" border-bottom="2px solid #f4a261" border-right="${borderRight}" padding="10px 10px">
             ${columnContent}
         </mj-column>`;
     });
