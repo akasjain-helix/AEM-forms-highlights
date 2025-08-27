@@ -1,0 +1,94 @@
+/* Quick Links Block Styles */
+
+.mj-quicklinks-section-wrapper {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.mj-quicklinks-section-content {
+    background-color: #f8f8f8;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.mj-quicklinks-column {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.mj-quicklinks-inner-column {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.mj-quicklinks-header {
+    text-align: center;
+    font-family: "Adobe Clean", Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #2c2c2c;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.mj-quicklinks-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px auto 0;
+}
+
+.mj-quicklinks-table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px 15px;
+    border-right: 1px solid #666;
+    font-family: "Adobe Clean", Arial, sans-serif;
+    font-size: 14px;
+}
+
+.mj-quicklinks-table td:last-child {
+    border-right: none;
+}
+
+.mj-quicklinks-table a {
+    color: #1473e6;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.mj-quicklinks-table a:hover {
+    color: #0c5494;
+    text-decoration: underline;
+}
+
+/* Alternative styles for different layouts */
+.mj-quicklinks-item {
+    display: inline-block;
+    margin: 0 10px;
+    font-family: "Adobe Clean", Arial, sans-serif;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Responsive adjustments for mobile */
+@media only screen and (max-width: 600px) {
+    .mj-quicklinks-table td {
+        display: block;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 10px;
+    }
+    
+    .mj-quicklinks-table td:last-child {
+        border-bottom: none;
+    }
+    
+    .mj-quicklinks-header {
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+}
