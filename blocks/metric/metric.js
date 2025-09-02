@@ -16,7 +16,7 @@ export default async function decorate(block) {
     // Parse each column and determine content type for fixed spacers
     const metricColumns = columns.map((column, columnIndex) => {
         const rows = [...column.children];
-        let number = '';
+        let primaryText = '';
         let coloredText = '';
         let description = '';
         let textColor = '#008000'; // default green
@@ -25,8 +25,8 @@ export default async function decorate(block) {
             const cellContent = row.textContent.trim();
             
             if (index === 0 && cellContent) {
-                // First row is the large number
-                number = cellContent;
+                // First row is the primary text (can be number or text like "Live < 50 days")
+                primaryText = cellContent;
             } else if (index === 1 && cellContent) {
                 // Second row is colored text with optional color configuration
                 if (cellContent.includes('color=')) {
@@ -54,16 +54,37 @@ export default async function decorate(block) {
         // Build the metric column MJML
         let columnContent = '';
         
-        if (number) {
-            columnContent += `<mj-text mj-class="mj-metric-number" align="center" padding-bottom="15px">${number}</mj-text>`;
+        if (primaryText) {
+            // HTML encode special characters like < > & to prevent parse errors
+            const encodedPrimaryText = primaryText
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+            columnContent += `<mj-text mj-class="mj-metric-number" align="center" padding-bottom="15px">${encodedPrimaryText}</mj-text>`;
         }
         
         if (coloredText) {
-            columnContent += `<mj-text mj-class="mj-metric-colored-text" align="center" color="${textColor}" padding-bottom="5px">${coloredText}</mj-text>`;
+            // HTML encode special characters
+            const encodedColoredText = coloredText
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+            columnContent += `<mj-text mj-class="mj-metric-colored-text" align="center" color="${textColor}" padding-bottom="5px">${encodedColoredText}</mj-text>`;
         }
         
         if (description) {
-            columnContent += `<mj-text mj-class="mj-metric-description" align="center" padding-top="5px">${description}</mj-text>`;
+            // HTML encode special characters
+            const encodedDescription = description
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+            columnContent += `<mj-text mj-class="mj-metric-description" align="center" padding-top="5px">${encodedDescription}</mj-text>`;
         }
 
 
@@ -88,10 +109,17 @@ export default async function decorate(block) {
 
     let headerSection = '';
     if (headerTitle) {
+        // HTML encode special characters in header
+        const encodedHeaderTitle = headerTitle
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
         headerSection = `
             <mj-section mj-class="mj-metric-header-section mj-first" width="90%" padding-bottom="0">
                 <mj-column mj-class="mj-metric-header-column" width="90%">
-                    <mj-text mj-class="mj-metric-header-title mj-content-text" align="center" width="90%">${headerTitle}</mj-text>
+                    <mj-text mj-class="mj-metric-header-title mj-content-text" align="center" width="90%">${encodedHeaderTitle}</mj-text>
                 </mj-column>
             </mj-section>
         `;
