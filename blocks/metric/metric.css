@@ -22,7 +22,7 @@
     font-size: 24px;
     font-weight: bold;
     color: #ffffff;
-    text-transform: uppercase;
+    text-transform: capitalize;
     letter-spacing: 3px;
     text-align: center;
     padding: 20px 0;
@@ -53,7 +53,7 @@
 /* Large number styling */
 .mj-metric-number {
     font-family: "Adobe Clean", Arial, sans-serif;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
     color: #2c2c2c;
     line-height: 1.1;
@@ -63,7 +63,7 @@
 /* Colored text styling (for increases/decreases) */
 .mj-metric-colored-text {
     font-family: "Adobe Clean", Arial, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     line-height: 1.3;
     text-align: center;
@@ -72,7 +72,7 @@
 /* Description text styling */
 .mj-metric-description {
     font-family: "Adobe Clean", Arial, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: normal;
     color: #2c2c2c;
     line-height: 1.4;

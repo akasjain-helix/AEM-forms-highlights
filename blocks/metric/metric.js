@@ -99,7 +99,7 @@ export default async function decorate(block) {
     });
 
     // Check if there's a header in the first row
-    let headerTitle = 'VALUE REALIZATION';
+    let headerTitle = 'Value Realization';
     const firstRow = block.querySelector('tr');
     if (firstRow && firstRow.children.length === 1) {
         headerTitle = firstRow.textContent.trim();
@@ -117,9 +117,9 @@ export default async function decorate(block) {
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#39;');
         headerSection = `
-            <mj-section mj-class="mj-metric-header-section mj-first" width="90%" padding-bottom="0">
-                <mj-column mj-class="mj-metric-header-column" width="90%">
-                    <mj-text mj-class="mj-metric-header-title mj-content-text" align="center" width="90%">${encodedHeaderTitle}</mj-text>
+            <mj-section mj-class="mj-metric-header-section mj-first" width="82%" padding-bottom="0">
+                <mj-column mj-class="mj-metric-header-column" width="82%">
+                    <mj-text mj-class="mj-metric-header-title mj-content-text" align="center" width="82%">${encodedHeaderTitle}</mj-text>
                 </mj-column>
             </mj-section>
         `;
@@ -128,7 +128,7 @@ export default async function decorate(block) {
     return `
         ${headerSection}
         <mj-section mj-class="mj-metric-section-wrapper">
-            <mj-column mj-class="mj-metric-column" width="90%">
+            <mj-column mj-class="mj-metric-column" width="82%">
                 <mj-section mj-class="mj-metric-section-content" padding-top="0">
                     ${metricColumns.join('')}
                 </mj-section>
