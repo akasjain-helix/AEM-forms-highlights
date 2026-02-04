@@ -99,7 +99,7 @@ export default async function decorate(block) {
     });
 
     // Check if there's a header in the first row
-    let headerTitle = 'Value Realization';
+    let headerTitle = 'Forms Product Usage';
     const firstRow = block.querySelector('tr');
     if (firstRow && firstRow.children.length === 1) {
         headerTitle = firstRow.textContent.trim();
