@@ -41,7 +41,9 @@ async function loadEager(doc) {
   if (document.querySelector('helix-sidekick, aem-sidekick')) {
     await import('../tools/sidekick/plugins.js');
   } else {
-    document.addEventListener('sidekick-ready', () => import('../tools/sidekick/plugins.js'), { once: true });
+    const loadPlugins = () => import('../tools/sidekick/plugins.js');
+    document.addEventListener('sidekick-ready', loadPlugins, { once: true });
+    document.addEventListener('helix-sidekick-ready', loadPlugins, { once: true });
   }
 }
 
