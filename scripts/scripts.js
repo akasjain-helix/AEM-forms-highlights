@@ -38,10 +38,10 @@ async function loadEager(doc) {
     frame.srcdoc = html;
   }
 
-  if (document.querySelector('helix-sidekick')) {
+  if (document.querySelector('helix-sidekick, aem-sidekick')) {
     await import('../tools/sidekick/plugins.js');
   } else {
-    document.addEventListener('helix-sidekick-ready', () => import('../tools/sidekick/plugins.js'), { once: true });
+    document.addEventListener('sidekick-ready', () => import('../tools/sidekick/plugins.js'), { once: true });
   }
 }
 

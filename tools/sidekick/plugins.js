@@ -177,7 +177,7 @@ const downloadHtml = (event) => {
 
 
 
-const sk = document.querySelector('helix-sidekick')
+const sk = document.querySelector('helix-sidekick, aem-sidekick')
 sk.addEventListener('custom:downloadHtml', downloadHtml);
 sk.addEventListener('custom:downloadHtmlWindows', downloadHtml);
 sk.addEventListener('custom:copyHtml', copyHtml);
