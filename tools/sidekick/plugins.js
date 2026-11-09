@@ -77,12 +77,21 @@ const copyHtml = () => {
 // Outlook does not render data: URI images, so images are embedded as
 // MIME parts (multipart/related) and referenced from the HTML via cid:.
 const inline_img = (html) => {
-  var images = html.contentDocument.getElementsByTagName('img');
+  // Work on a clone so the live preview keeps its original image sources.
+  var root = html.contentDocument.documentElement;
+  var clone = root.cloneNode(true);
+  var images = Array.from(root.getElementsByTagName('img'));
+  var cloneImages = Array.from(clone.getElementsByTagName('img'));
   var attachments = [];
 
   for(var i = 0; i < images.length; i++) {
 
     var img = images[i];
+    var cloneImg = cloneImages[i];
+    if (!clone.contains(cloneImg)) {
+      // already removed as a video controls overlay
+      continue;
+    }
 
     var h = img.height
     var w = img.width
@@ -96,9 +105,10 @@ const inline_img = (html) => {
     ctx.drawImage(img, 0, 0, c.width, c.height)
 
     if( img.classList.contains('video')) {
-      var controls = img.nextElementSibling;
-      ctx.drawImage(controls, 0, 0, c.width, c.height);
-      controls.remove();
+      ctx.drawImage(img.nextElementSibling, 0, 0, c.width, c.height);
+      if (cloneImg.nextElementSibling) {
+        cloneImg.nextElementSibling.remove();
+      }
     }
 
     var cid = 'image' + i + '@newsletter';
@@ -107,13 +117,13 @@ const inline_img = (html) => {
       name: 'image' + i + '.png',
       data: c.toDataURL("image/png").split(',')[1],
     });
-    img.src = 'cid:' + cid;
+    cloneImg.src = 'cid:' + cid;
 
     // reset height and width to original value
-    img.height = h
-    img.width = w
+    cloneImg.height = h
+    cloneImg.width = w
   }
-  return { html: html.contentWindow.document.documentElement.outerHTML, attachments: attachments };
+  return { html: clone.outerHTML, attachments: attachments };
 }
 
 const toBase64Utf8 = (str) => {
