@@ -77,9 +77,11 @@ const copyHtml = () => {
 // Outlook does not render data: URI images, so images are embedded as
 // MIME parts (multipart/related) and referenced from the HTML via cid:.
 const inline_img = (html) => {
-  // Work on a clone so the live preview keeps its original image sources.
+  // Clone into an inert document so the live preview keeps its original
+  // image sources and the browser does not try to fetch cid: URLs.
   var root = html.contentDocument.documentElement;
-  var clone = root.cloneNode(true);
+  var inertDoc = document.implementation.createHTMLDocument('');
+  var clone = inertDoc.importNode(root, true);
   var images = Array.from(root.getElementsByTagName('img'));
   var cloneImages = Array.from(clone.getElementsByTagName('img'));
   var attachments = [];
