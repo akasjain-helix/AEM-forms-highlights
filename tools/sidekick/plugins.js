@@ -74,8 +74,11 @@ const copyHtml = () => {
   }
 };
 
+// Outlook does not render data: URI images, so images are embedded as
+// MIME parts (multipart/related) and referenced from the HTML via cid:.
 const inline_img = (html) => {
   var images = html.contentDocument.getElementsByTagName('img');
+  var attachments = [];
 
   for(var i = 0; i < images.length; i++) {
 
@@ -98,13 +101,53 @@ const inline_img = (html) => {
       controls.remove();
     }
 
-    img.src = c.toDataURL("image/png");
+    var cid = 'image' + i + '@newsletter';
+    attachments.push({
+      cid: cid,
+      name: 'image' + i + '.png',
+      data: c.toDataURL("image/png").split(',')[1],
+    });
+    img.src = 'cid:' + cid;
 
     // reset height and width to original value
     img.height = h
     img.width = w
   }
-  return html.contentWindow.document.documentElement.outerHTML
+  return { html: html.contentWindow.document.documentElement.outerHTML, attachments: attachments };
+}
+
+const toBase64Utf8 = (str) => {
+  const bytes = new TextEncoder().encode(str);
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) {
+    bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  }
+  return btoa(bin);
+}
+
+const wrap76 = (str) => str.replace(/(.{76})/g, '$1\r\n');
+
+const buildMime = (headers, html, attachments) => {
+  const boundary = '----=_NewsletterPart_' + Date.now().toString(36);
+  let mime = headers.join('\r\n') + '\r\n'
+    + 'MIME-Version: 1.0\r\n'
+    + 'Content-Type: multipart/related; type="text/html"; boundary="' + boundary + '"\r\n'
+    + '\r\n'
+    + '--' + boundary + '\r\n'
+    + 'Content-Type: text/html; charset=utf-8\r\n'
+    + 'Content-Transfer-Encoding: base64\r\n'
+    + '\r\n'
+    + wrap76(toBase64Utf8(html)) + '\r\n';
+  attachments.forEach((a) => {
+    mime += '--' + boundary + '\r\n'
+      + 'Content-Type: image/png; name="' + a.name + '"\r\n'
+      + 'Content-Transfer-Encoding: base64\r\n'
+      + 'Content-ID: <' + a.cid + '>\r\n'
+      + 'Content-Disposition: inline; filename="' + a.name + '"\r\n'
+      + '\r\n'
+      + wrap76(a.data) + '\r\n';
+  });
+  return mime + '--' + boundary + '--\r\n';
 }
 
 const downloadHtmlWindows = () => {
@@ -137,7 +180,7 @@ const downloadHtml = (event) => {
     const title = h1 ? h1.innerText : `Experience Manager Forms Engineering Updates | ${monthNames[month]} ${year}`;
     const subject = `Subject: ${title}`;
     const to = 'To: prjain@adobe.com';
-    const html = inline_img(iframe);
+    const { html, attachments } = inline_img(iframe);
 
     const fileName = title
                          .replaceAll(/\W+/g, '-')
@@ -145,15 +188,8 @@ const downloadHtml = (event) => {
                          .toLowerCase()
                      + '.' + fileExtension
 
-    const eml = to + '\n'
-                + subject + '\n'
-                + 'Content-Type: text/html;charset=utf-8\n'
-                + 'X-Unsent: 1'+'\n'
-                + '\n'
-                + '\n'
-                + html;
-    const bytes = new TextEncoder().encode(eml);
-    const blob = new Blob([bytes], { type: 'text/plain;charset=utf-8' });
+    const eml = buildMime([to, subject, 'X-Unsent: 1'], html, attachments);
+    const blob = new Blob([eml], { type: 'message/rfc822' });
     const url = URL.createObjectURL(blob);
 
     const fileLink = document.createElement('a');
