@@ -354,6 +354,12 @@ function decoratePersonalization(main) {
     let unwrap = true;
     let match;
 
+    // only treat <em> as personalization when it contains nothing but
+    // expressions like profile.firstName; otherwise it is regular italic text
+    if (!/^\W*[a-zA-Z0-9]+\.[a-zA-Z0-9.]+(\W+[a-zA-Z0-9]+\.[a-zA-Z0-9.]+)*\W*$/.test(text)) {
+      return;
+    }
+
     const transform = (expr) => {
       if (personalizationType === 'adobe-campaign-standard') {
         const nlExpr = `/${expr.replaceAll('.', '/')}`;
@@ -380,6 +386,7 @@ function decoratePersonalization(main) {
       content += transform(match[0]);
       text = text.substring(match.index + match[0].length);
     }
+    content += text;
 
     if (unwrap) {
       em.insertAdjacentHTML('afterend', content);
