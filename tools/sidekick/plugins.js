@@ -125,6 +125,28 @@ const inline_img = (html) => {
     cloneImg.height = h
     cloneImg.width = w
   }
+  // <picture><source srcset> points to relative page URLs that email clients
+  // cannot resolve and would prefer over the cid: <img>, so drop them.
+  clone.querySelectorAll('picture source').forEach((s) => s.remove());
+
+  // Outlook drops empty <p> elements, which removes mj-divider lines.
+  // Replace them with a table row that carries the border.
+  clone.querySelectorAll('p').forEach((p) => {
+    if (p.textContent.trim() || p.children.length || !/border-top/.test(p.style.cssText)) {
+      return;
+    }
+    var border = p.style.borderTop.replace(/lightgrey/i, '#d3d3d3');
+    var table = inertDoc.createElement('table');
+    table.setAttribute('role', 'presentation');
+    table.setAttribute('width', '100%');
+    table.setAttribute('cellpadding', '0');
+    table.setAttribute('cellspacing', '0');
+    table.setAttribute('border', '0');
+    table.innerHTML = '<tr><td style="border-top:' + border
+      + ';font-size:1px;line-height:1px;height:1px;">&nbsp;</td></tr>';
+    p.replaceWith(table);
+  });
+
   return { html: clone.outerHTML, attachments: attachments };
 }
 
